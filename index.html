@@ -107,6 +107,46 @@
                 </div>
                 <div class="projects-grid">
                     <div class="project-card">
+                        <div class="project-img hangman-pro-visual">
+                            <div class="hangman-card-overlay">
+                                <div class="hangman-card-header">
+                                    <div class="dot red"></div>
+                                    <div class="dot yellow"></div>
+                                    <div class="dot green"></div>
+                                </div>
+                                <div class="hangman-pro-content">
+                                    <div class="pro-ascii">
+                                        +---+
+                                        | |
+                                        O |
+                                        /|\ |
+                                        |
+                                        =========
+                                    </div>
+                                    <div class="pro-console">
+                                        <div class="pro-line">
+                                            <span class="keyword">import</span> <span class="string">random</span>
+                                        </div>
+                                        <div class="pro-line">
+                                            <span>> _ _ M P U T _ R</span>
+                                            <span class="hangman-cursor"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Python Hangman Game</h3>
+                            <p><strong>Location:</strong> C:\Users\Arun\OneDrive\Documents\code alpha task\hangman.py
+                            </p>
+                            <p>An interactive word guessing game built with Python logic. Play the web version below!
+                            </p>
+                            <div class="project-links">
+                                <button class="btn btn-secondary play-game-btn" data-game="hangman">PLAY GAME →</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
                         <div class="project-img">
                             <img src="predictive_analytics_visual.png" alt="Predictive Analytics Model">
                             <div class="glow-point"></div>
@@ -274,6 +314,43 @@
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="modal-img">
         <div id="caption"></div>
+    </div>
+
+    <!-- Hangman Game Modal -->
+    <div id="hangman-modal" class="modal game-modal">
+        <div class="modal-content terminal-content">
+            <span class="close-modal">&times;</span>
+            <div class="terminal-header">
+                <i class="fas fa-terminal"></i>
+                <span>admin@portfolio: ~/codealpha/hangman</span>
+            </div>
+            <div class="terminal-body">
+                <div class="hangman-display">
+                    <pre id="game-ascii">
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========</pre>
+                </div>
+                <div class="game-info">
+                    <p id="game-word-display">_ _ _ _ _ _ _ _</p>
+                    <p id="game-status-msg">Guess the characters: </p>
+                    <p id="game-turns">Turns remaining: 3</p>
+                    <p id="game-guessed">Guessed: </p>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="prompt">$</span>
+                    <input type="text" id="game-input" maxlength="1" autocomplete="off">
+                    <span class="hangman-cursor"></span>
+                </div>
+                <div id="game-controls" class="hidden">
+                    <button class="btn btn-primary" id="btn-restart">Play Again</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
