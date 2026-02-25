@@ -1042,6 +1042,8 @@ footer p {
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: flex;
+        z-index: 1000;
+        position: relative;
     }
 
     .nav-links {
@@ -1264,3 +1266,4 @@ footer p {
         opacity: 0;
     }
 }
+
