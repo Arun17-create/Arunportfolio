@@ -1,152 +1,283 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form');
-    const messageInput = document.getElementById('message');
+<!DOCTYPE html>
+<html lang="en">
 
-    // Create Toast Container if it doesn't exist
-    let toastContainer = document.querySelector('.toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arun R| B.Tech AI&DS Portfolio</title>
+    <meta name="description" content="Portfolio of Arun R, AI & Data Science professional. B.Tech AI&DS student.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    function showToast(name, message) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
+<body>
+    <div class="glow-bg"></div>
 
-        // Truncate message for preview
-        const preview = message.length > 100 ? message.substring(0, 100) + '...' : message;
-
-        toast.innerHTML = `
-            <div class="toast-header">
-                <i class="fas fa-paper-plane"></i>
-                <span>Message Sent Successfully</span>
+    <header>
+        <nav class="container">
+            <div class="logo"><span></span>ARUN R</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="header-right">
             </div>
-            <div class="toast-body">
-                <div class="toast-user">From: ${name}</div>
-                <div class="toast-content">${preview}</div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <span class="badge">Welcome to my professional space</span>
+                    <h1>I'm <span>Arun R</span></h1>
+                    <h2>B.Tech AI & Data Science</h2>
+                    <p>Architecting intelligent solutions and transforming data into actionable insights. Passionate
+                        about AI, Machine Learning, and Big Data technologies.</p>
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-circle"></div>
+                    <div class="visual-card">
+                        <div class="card-inner">
+                            <img src="profile.jpg" alt="Arun R" class="hero-profile-img">
+                        </div>
+                        <div class="hero-socials">
+                            <a href="https://github.com/Arun17-create" target="_blank" aria-label="GitHub"><i
+                                    class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/arun-r-15146638b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/its_me_arun._17?igsh=MXIycmIyaGw0cW02NA=="
+                                target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        `;
+        </section>
 
-        toastContainer.appendChild(toast);
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">Who I Am</span>
+                    <h2>About Me</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>I am an <strong>AI & Data Science</strong> enthusiast currently pursuing my
+                            <strong>B.Tech</strong>. My focus lies at the intersection of machine learning algorithms
+                            and real-world data applications.
+                        </p>
+                        <p>I enjoy solving complex problems using Python, SQL, and various AI frameworks. My goal is to
+                            build intelligent systems that can make a meaningful impact on society.</p>
+                        <div class="skills-tags">
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Data Analysis</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">AI Ethics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        // Remove toast after 5 seconds
-        setTimeout(() => {
-            toast.classList.add('hiding');
-            setTimeout(() => {
-                toast.remove();
-            }, 500);
-        }, 5000);
-    }
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">My Portfolio</span>
+                    <h2>Featured Projects</h2>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="predictive_analytics_visual.png" alt="Predictive Analytics Model">
+                            <div class="glow-point"></div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Predictive Analytics Model</h3>
+                            <p>A machine learning model designed to predict trends using historical data sets.</p>
+                            <div class="project-links">
+                                <a href="#">Details →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="computer_vision_visual.png" alt="Computer Vision App">
+                            <div class="glow-point"></div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Computer Vision App</h3>
+                            <p>An application utilizing OpenCV for real-time object detection and tracking.</p>
+                            <div class="project-links">
+                                <a href="#">Details →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-img dashboard-visual">
+                            <div class="dash-bars">
+                                <span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="dash-circle"></div>
+                            <div class="glow-point"></div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Data Visualization Dashboard</h3>
+                            <p>Interactive dashboard built with Streamlit and Plotly for deep data exploration.</p>
+                            <div class="project-links">
+                                <a href="#">Details →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    if (contactForm && messageInput) {
-        // Handle "Enter" key in textarea
-        messageInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                console.log('Enter pressed, submitting form...');
+        <section id="certificates" class="certificates-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="badge">Achievements</span>
+                    <h2>My Certificates</h2>
+                </div>
+                <div class="certificates-grid">
+                    <div class="certificate-card">
+                        <div class="cert-img-container">
+                            <img src="data science ibm.jpeg" alt="IBM Data Science 101 Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <h3>Data Science 101</h3>
+                            <p>Issued by IBM SkillsBuild</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="cert-img-container">
+                            <img src="fsd.jpeg" alt="Full Stack Development Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <h3>Full Stack Development</h3>
+                            <p>Certificate of Recognition - GenZ Innovations</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="cert-img-container">
+                            <img src="oops concept in python.jpeg" alt="OOPs Concept in Python Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <h3>OOPs Concept in Python</h3>
+                            <p>Issued by UniAthena</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="cert-img-container">
+                            <img src="Basics of python programming.jpeg" alt="Basics of Python Programming Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <h3>Basics of Python Programming</h3>
+                            <p>Issued by UniAthena</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="cert-img-container">
+                            <img src="data structure python.jpeg" alt="Data Structure in Python Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <h3>Data Structure in Python</h3>
+                            <p>Issued by UniAthena</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                // Use requestSubmit if available to trigger the 'submit' event correctly
-                if (typeof contactForm.requestSubmit === 'function') {
-                    contactForm.requestSubmit();
-                } else {
-                    contactForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                }
-            }
-        });
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="section-header contact-header">
+                    <h2>Contact Me</h2>
+                    <div class="header-line"><span></span></div>
+                </div>
 
-        // Handle form submission
-        contactForm.addEventListener('submit', (e) => {
-            // CRITICAL: Prevent the default form submission (reload)
-            e.preventDefault();
+                <div class="contact-info-grid">
+                    <a href="https://www.google.com/maps/place/Thiruvaiyaru,+Tamil+Nadu+613204/@10.8798543,79.106041,15z/data=!3m1!4b1!4m6!3m5!1s0x3baac3fc29abc855:0xe3d0f49ba4f489ea!8m2!3d10.8798545!4d79.106041!16zL20vMDRkMF80?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D"
+                        target="_blank" class="info-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Address</h3>
+                        <p>Thanjavur, TamilNadu</p>
+                    </a>
+                    <a href="tel:+919344544737" class="info-box">
+                        <i class="fas fa-phone-alt"></i>
+                        <h3>Phone</h3>
+                        <p>+91 9344544737</p>
+                    </a>
+                    <a href="mailto:king.arun9344@gmail.com" class="info-box">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email Address</h3>
+                        <p>king.arun9344@gmail.com</p>
+                    </a>
+                    <div class="info-box">
+                        <a href="https://arunportfolio-three.vercel.app/" target="_blank" class="info-box">
+                            <i class="fas fa-globe"></i>
+                            <h3>Website</h3>
+                            <p>mywebsite.com</p>
+                        </a>
+                    </div>
+                </div>
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = messageInput.value;
+                <div class="contact-form-container">
+                    <div class="contact-form-card">
+                        <h3>Send Message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Message" rows="5"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-send">SEND</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-            console.log('Submission attempt:', { name, email, message });
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 R.Arun. Built with passion & intelligence.</p>
+        </div>
+    </footer>
 
-            if (name && email && message) {
-                const submitBtn = contactForm.querySelector('.btn-send');
-                const originalBtnText = submitBtn.textContent;
+    <!-- Lightbox Modal -->
+    <div id="cert-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div id="caption"></div>
+    </div>
 
-                // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'SENDING...';
+    <script src="script.js"></script>
+</body>
 
-                // Send to Formspree
-                fetch('https://formspree.io/f/mnjblrko', {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // Show custom toast notification
-                            showToast(name, message);
-                            // Clear the form
-                            contactForm.reset();
-                        } else {
-                            response.json().then(data => {
-                                if (Object.hasOwn(data, 'errors')) {
-                                    alert(data["errors"].map(error => error["message"]).join(", "));
-                                } else {
-                                    alert("Oops! There was a problem submitting your form");
-                                }
-                            })
-                        }
-                    })
-                    .catch(error => {
-                        alert("Oops! There was a problem submitting your form");
-                        console.error('Form error:', error);
-                    })
-                    .finally(() => {
-                        // Reset button state
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalBtnText;
-                    });
-            } else {
-                console.warn('Form validation failed: missing fields.');
-            }
-        });
-    }
 
-    // Modal functionality (based on HTML structure)
-    const modal = document.getElementById('cert-modal');
-    const modalImg = document.getElementById('modal-img');
-    const captionText = document.getElementById('caption');
-    const closeBtn = document.querySelector('.close-modal');
-
-    document.querySelectorAll('.certificate-card img').forEach(img => {
-        img.addEventListener('click', () => {
-            modal.style.display = 'block';
-            modalImg.src = img.src;
-            captionText.innerHTML = img.alt;
-        });
-    });
-
-    if (closeBtn) {
-        closeBtn.onclick = () => {
-            modal.style.display = 'none';
-        }
-    }
-
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-
-    // Mobile menu (based on HTML structure)
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active');
-        });
-    }
-});
+</html>
