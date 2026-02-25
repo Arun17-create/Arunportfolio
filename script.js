@@ -149,4 +149,148 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenuBtn.classList.toggle('active');
         });
     }
+
+    // Hangman Game Logic
+    const hangmanModal = document.getElementById('hangman-modal');
+    const playBtn = document.querySelector('.play-game-btn');
+    const gameInput = document.getElementById('game-input');
+    const wordDisplay = document.getElementById('game-word-display');
+    const statusMsg = document.getElementById('game-status-msg');
+    const turnsDisplay = document.getElementById('game-turns');
+    const guessedDisplay = document.getElementById('game-guessed');
+    const asciiDisplay = document.getElementById('game-ascii');
+    const restartBtn = document.getElementById('btn-restart');
+    const controls = document.getElementById('game-controls');
+
+    const words = ["computer", "laptop", "windows", "desktop","keyboard", "mouse", "monitor", "printer", "scanner", "speaker"];
+    const asciiStates = [
+        `  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========`,
+        `  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========`,
+        `  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`,
+        `  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`,
+    ];
+
+    let currentWord = "";
+    let guesses = "";
+    let turns = 3;
+    let isGameOver = false;
+
+    function initGame() {
+        currentWord = words[Math.floor(Math.random() * words.length)];
+        guesses = "";
+        turns = 3;
+        isGameOver = false;
+        updateDisplay();
+        statusMsg.textContent = "Guess the characters: ";
+        controls.classList.add('hidden');
+        gameInput.disabled = false;
+        gameInput.value = "";
+        gameInput.focus();
+    }
+
+    function updateDisplay() {
+        let display = "";
+        let failed = 0;
+        for (const char of currentWord) {
+            if (guesses.includes(char)) {
+                display += char + " ";
+            } else {
+                display += "_ ";
+                failed++;
+            }
+        }
+        wordDisplay.textContent = display.trim();
+        turnsDisplay.textContent = `Turns remaining: ${turns}`;
+        guessedDisplay.textContent = `Guessed: ${guesses.split('').join(', ')}`;
+        asciiDisplay.textContent = asciiStates[turns];
+
+        if (failed === 0) {
+            statusMsg.textContent = "YOU WIN! The word was: " + currentWord.toUpperCase();
+            endGame();
+        } else if (turns === 0) {
+            statusMsg.textContent = "GAME OVER. The word was: " + currentWord.toUpperCase();
+            endGame();
+        }
+    }
+
+    function endGame() {
+        isGameOver = true;
+        gameInput.disabled = true;
+        controls.classList.remove('hidden');
+    }
+
+    if (playBtn) {
+        playBtn.addEventListener('click', () => {
+            hangmanModal.style.display = 'block';
+            initGame();
+        });
+    }
+
+    if (gameInput) {
+        gameInput.addEventListener('input', (e) => {
+            if (isGameOver) return;
+            const val = e.target.value.toLowerCase();
+            if (val && /^[a-z]$/.test(val)) {
+                if (guesses.includes(val)) {
+                    statusMsg.textContent = "You already guessed that letter!";
+                } else {
+                    guesses += val;
+                    if (!currentWord.includes(val)) {
+                        turns--;
+                        statusMsg.textContent = "Wrong guess!";
+                    } else {
+                        statusMsg.textContent = "Good guess!";
+                    }
+                }
+                updateDisplay();
+            }
+            e.target.value = "";
+        });
+
+        // Close modal logic
+        const closeModals = document.querySelectorAll('.close-modal');
+        closeModals.forEach(btn => {
+            btn.addEventListener('click', () => {
+                hangmanModal.style.display = 'none';
+                modal.style.display = 'none';
+            });
+        });
+
+        // Window click to close
+        window.onclick = (event) => {
+            if (event.target == hangmanModal) {
+                hangmanModal.style.display = 'none';
+            } else if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    }
+
+    if (restartBtn) {
+        restartBtn.addEventListener('click', initGame);
+    }
 });
