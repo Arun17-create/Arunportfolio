@@ -1,3 +1,40 @@
+// Welcome Screen Logic
+window.addEventListener('load', () => {
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const welcomeText = welcomeScreen ? welcomeScreen.querySelector('.welcome-text') : null;
+
+    if (welcomeScreen && welcomeText) {
+        // 1st: HELLO.
+        welcomeText.textContent = 'HELLO.';
+
+        // 2nd: வணக்கம்.
+        setTimeout(() => {
+            welcomeText.style.opacity = '0';
+            setTimeout(() => {
+                welcomeText.textContent = 'வணக்கம்.';
+                welcomeText.style.opacity = '1';
+            }, 500);
+        }, 1200);
+
+        // 3rd: नमस्ते.
+        setTimeout(() => {
+            welcomeText.style.opacity = '0';
+            setTimeout(() => {
+                welcomeText.textContent = 'नमस्ते.';
+                welcomeText.style.opacity = '1';
+            }, 500);
+        }, 2400);
+
+        // Final Wait & Fade Out
+        setTimeout(() => {
+            welcomeScreen.classList.add('fade-out');
+            setTimeout(() => {
+                welcomeScreen.remove();
+            }, 1000);
+        }, 3600); // 2400 (3rd start) + 1200 (duration) = 3600 (No extra wait)
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const messageInput = document.getElementById('message');
@@ -162,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('btn-restart');
     const controls = document.getElementById('game-controls');
 
-    const words = ["computer", "laptop", "windows", "desktop","keyboard", "mouse", "monitor", "printer", "scanner", "speaker"];
+    const words = ["computer", "laptop", "windows", "desktop", "keyboard", "mouse", "monitor", "printer", "scanner", "speaker"];
     const asciiStates = [
         `  +---+
   |   |
