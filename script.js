@@ -4,10 +4,9 @@ window.addEventListener('load', () => {
     const welcomeText = welcomeScreen ? welcomeScreen.querySelector('.welcome-text') : null;
 
     if (welcomeScreen && welcomeText) {
-        // 1st: HELLO.
-        welcomeText.textContent = 'HELLO.';
+        // Initial text is already "HELLO." from HTML
 
-        // 2nd: வணக்கம்.
+        // 1st transition to வணக்கம்.
         setTimeout(() => {
             welcomeText.style.opacity = '0';
             setTimeout(() => {
@@ -16,7 +15,7 @@ window.addEventListener('load', () => {
             }, 500);
         }, 1200);
 
-        // 3rd: नमस्ते.
+        // 2nd transition to नमस्ते.
         setTimeout(() => {
             welcomeText.style.opacity = '0';
             setTimeout(() => {
@@ -31,7 +30,7 @@ window.addEventListener('load', () => {
             setTimeout(() => {
                 welcomeScreen.remove();
             }, 1000);
-        }, 3600); // 2400 (3rd start) + 1200 (duration) = 3600 (No extra wait)
+        }, 3600);
     }
 });
 
@@ -330,4 +329,131 @@ document.addEventListener('DOMContentLoaded', () => {
     if (restartBtn) {
         restartBtn.addEventListener('click', initGame);
     }
+
+    // Dashboard Logic
+    const dashModal = document.getElementById('dashboard-modal');
+    const viewDashBtn = document.getElementById('view-dashboard-btn');
+    let chartsInitialized = false;
+
+    if (viewDashBtn && dashModal) {
+        viewDashBtn.addEventListener('click', () => {
+            dashModal.style.display = 'block';
+            if (!chartsInitialized) {
+                initCharts();
+                chartsInitialized = true;
+            }
+        });
+    }
+
+    function initCharts() {
+        // Common styles for charts
+        const gridColor = 'rgba(255, 255, 255, 0.05)';
+        const textColor = '#a1a1aa';
+
+        // 1. Accuracy Chart (Line)
+        new Chart(document.getElementById('accuracyChart'), {
+            type: 'line',
+            data: {
+                labels: ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'],
+                datasets: [{
+                    label: 'Model Accuracy',
+                    data: [0.65, 0.72, 0.85, 0.88, 0.92, 0.96],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
+                }
+            }
+        });
+
+        // 2. Training Loss (Area)
+        new Chart(document.getElementById('lossChart'), {
+            type: 'line',
+            data: {
+                labels: ['Epoch 1', 'Epoch 2', 'Epoch 3', 'Epoch 4', 'Epoch 5'],
+                datasets: [{
+                    label: 'Loss',
+                    data: [0.8, 0.5, 0.3, 0.15, 0.08],
+                    borderColor: '#f43f5e',
+                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
+                }
+            }
+        });
+
+        // 3. Data Distribution (Doughnut)
+        new Chart(document.getElementById('distributionChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Training', 'Validation', 'Testing'],
+                datasets: [{
+                    data: [70, 15, 15],
+                    backgroundColor: ['#7c3aed', '#06b6d4', '#4ade80'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: textColor, padding: 20 }
+                    }
+                }
+            }
+        });
+
+        // 4. Feature Importance (Bar)
+        new Chart(document.getElementById('importanceChart'), {
+            type: 'bar',
+            data: {
+                labels: ['CNN', 'RNN', 'Transformers', 'GANs', 'RL'],
+                datasets: [{
+                    label: 'Efficiency',
+                    data: [85, 65, 95, 75, 80],
+                    backgroundColor: 'rgba(6, 182, 212, 0.6)',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: textColor }, grid: { display: false } },
+                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
+                }
+            }
+        });
+    }
+
+    // Add dashboard to close logic
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (dashModal) dashModal.style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == dashModal) {
+            dashModal.style.display = 'none';
+        }
+    });
 });
