@@ -309,6 +309,9 @@ code {
 .section-header h2 {
     font-size: 2.5rem;
     font-weight: 700;
+    color: var(--accent-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* About Section */
@@ -1389,6 +1392,9 @@ footer p {
 .welcome-text {
     font-size: 5rem;
     font-weight: 800;
+    text-align: center;
+    width: 100%;
+    padding: 0 1.5rem;
     transition: opacity 0.5s ease;
     background: linear-gradient(to right, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text;
@@ -1412,5 +1418,60 @@ footer p {
 @media (max-width: 768px) {
     .welcome-text {
         font-size: 3rem;
+    }
+}
+
+/* Dashboard Specific Styles */
+.dashboard-content {
+    background: #0f172a;
+    max-width: 1100px;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.dashboard-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.dashboard-header h2 {
+    color: var(--accent-secondary);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard-header p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.chart-container {
+    background: rgba(30, 41, 59, 0.5);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+.chart-container h3 {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
     }
 }
