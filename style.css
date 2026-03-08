@@ -980,6 +980,18 @@ code {
     color: var(--text-dim);
 }
 
+.win-msg {
+    color: #4ade80 !important;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+    font-weight: bold;
+}
+
+.loss-msg {
+    color: #f87171 !important;
+    text-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+    font-weight: bold;
+}
+
 .terminal-input-line {
     display: flex;
     align-items: center;
@@ -1001,6 +1013,19 @@ code {
     margin-top: 2rem;
     display: flex;
     justify-content: center;
+}
+
+#game-clue {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+#clue-text {
+    color: #4ade80;
+    font-weight: 500;
 }
 
 .hidden {
@@ -1421,57 +1446,33 @@ footer p {
     }
 }
 
-/* Dashboard Specific Styles */
-.dashboard-content {
-    background: #0f172a;
-    max-width: 1100px;
-    padding: 2rem;
-    border-radius: 24px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
+/* STRANGER THINGS PROJECT ADAPTATION - IMAGE ONLY */
+.stranger-visual {
+    background: #000 !important;
+    position: relative;
+    overflow: hidden;
+    padding: 0 !important;
 }
 
-.dashboard-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1rem;
+.stranger-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
 }
 
-.dashboard-header h2 {
-    color: var(--accent-secondary);
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.stranger-card-link:hover .stranger-visual img {
+    transform: scale(1.1);
 }
 
-.dashboard-header p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
+.stranger-card-link {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-}
-
-.chart-container {
-    background: rgba(30, 41, 59, 0.5);
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-}
-
-.chart-container h3 {
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-@media (max-width: 992px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
+.stranger-card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    border-color: #ef4444 !important;
 }
