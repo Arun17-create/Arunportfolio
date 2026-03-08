@@ -196,9 +196,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessedDisplay = document.getElementById('game-guessed');
     const asciiDisplay = document.getElementById('game-ascii');
     const restartBtn = document.getElementById('btn-restart');
+    const clueBtn = document.getElementById('btn-clue');
+    const clueDisplay = document.getElementById('game-clue');
+    const clueText = document.getElementById('clue-text');
     const controls = document.getElementById('game-controls');
 
-    const words = ["computer", "laptop", "windows", "desktop", "keyboard", "mouse", "monitor", "printer", "scanner", "speaker"];
+    const words = [
+        { word: "computer", hint: "An electronic device for storing and processing data." },
+        { word: "laptop", hint: "A portable personal computer." },
+        { word: "windows", hint: "A popular operating system by Microsoft." },
+        { word: "desktop", hint: "A personal computer designed for regular use at a single location." },
+        { word: "keyboard", hint: "An input device used to type text into a computer." },
+        { word: "mouse", hint: "A handheld pointing device that detects two-dimensional motion." },
+        { word: "monitor", hint: "An output device that displays information in pictorial or textual form." },
+        { word: "printer", hint: "A machine for printing text or illustrations on paper." },
+        { word: "scanner", hint: "A device that scans documents and converts them into digital data." },
+        { word: "speaker", hint: "An output device that produces sound." },
+        { word: "python", hint: "A high-level programming language known for its readability." },
+        { word: "algorithm", hint: "A set of rules or processes to be followed in calculations or problem-solving." },
+        { word: "database", hint: "A structured set of data held in a computer." },
+        { word: "network", hint: "A group of two or more computer systems linked together." },
+        { word: "cloud", hint: "A network of remote servers hosted on the internet." },
+        { word: "intelligence", hint: "The ability to acquire and apply knowledge and skills (AI)." },
+        { word: "machine", hint: "A device that uses energy to perform a specific task (ML)." },
+        { word: "analytics", hint: "The systematic computational analysis of data or statistics." },
+        { word: "visualization", hint: "The representation of an object, situation, or set of information as a chart or image." },
+        { word: "security", hint: "The state of being free from danger or threat (Cybersecurity)." }
+    ];
     const asciiStates = [
         `  +---+
   |   |
@@ -206,28 +230,49 @@ document.addEventListener('DOMContentLoaded', () => {
  /|\\  |
  / \\  |
       |
-=========`,
+=========`, // 0: Full Body
         `  +---+
   |   |
   O   |
  /|\\  |
  /    |
       |
-=========`,
+=========`, // 1: Left Leg
         `  +---+
   |   |
   O   |
  /|\\  |
       |
       |
-=========`,
+=========`, // 2: Right Arm
+        `  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`, // 3: Left Arm
+        `  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`, // 4: Torso
+        `  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`, // 5: Head
         `  +---+
   |   |
       |
       |
       |
       |
-=========`,
+=========`, // 6: Empty
     ];
 
     let currentWord = "";
@@ -238,11 +283,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function initGame() {
         currentWord = words[Math.floor(Math.random() * words.length)];
         guesses = "";
-        turns = 3;
+        turns = 6;
         isGameOver = false;
         updateDisplay();
         statusMsg.textContent = "Guess the characters: ";
-        controls.classList.add('hidden');
+        statusMsg.classList.remove('win-msg', 'loss-msg');
+        clueDisplay.classList.add('hidden');
+        clueText.textContent = "";
+        clueBtn.classList.remove('hidden');
+        restartBtn.classList.add('hidden');
         gameInput.disabled = false;
         gameInput.value = "";
         gameInput.focus();
@@ -251,7 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateDisplay() {
         let display = "";
         let failed = 0;
-        for (const char of currentWord) {
+        const wordToGuess = currentWord.word;
+        for (const char of wordToGuess) {
             if (guesses.includes(char)) {
                 display += char + " ";
             } else {
@@ -265,10 +315,12 @@ document.addEventListener('DOMContentLoaded', () => {
         asciiDisplay.textContent = asciiStates[turns];
 
         if (failed === 0) {
-            statusMsg.textContent = "YOU WIN! The word was: " + currentWord.toUpperCase();
+            statusMsg.textContent = "CONGRATULATIONS! YOU WIN!";
+            statusMsg.classList.add('win-msg');
             endGame();
         } else if (turns === 0) {
-            statusMsg.textContent = "GAME OVER. The word was: " + currentWord.toUpperCase();
+            statusMsg.textContent = "GAME OVER. The word was: " + currentWord.word.toUpperCase();
+            statusMsg.classList.add('loss-msg');
             endGame();
         }
     }
@@ -276,7 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function endGame() {
         isGameOver = true;
         gameInput.disabled = true;
-        controls.classList.remove('hidden');
+        clueBtn.classList.add('hidden');
+        restartBtn.classList.remove('hidden');
     }
 
     if (playBtn) {
@@ -295,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     statusMsg.textContent = "You already guessed that letter!";
                 } else {
                     guesses += val;
-                    if (!currentWord.includes(val)) {
+                    if (!currentWord.word.includes(val)) {
                         turns--;
                         statusMsg.textContent = "Wrong guess!";
                     } else {
@@ -326,134 +379,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    if (clueBtn) {
+        clueBtn.addEventListener('click', () => {
+            if (isGameOver) return;
+
+            // Show text hint
+            clueText.textContent = currentWord.hint;
+            clueDisplay.classList.remove('hidden');
+
+            // Reveal a random missing letter
+            const word = currentWord.word;
+            const remainingLetters = [];
+            for (const char of word) {
+                if (!guesses.includes(char)) {
+                    remainingLetters.push(char);
+                }
+            }
+
+            if (remainingLetters.length > 0) {
+                const randomChar = remainingLetters[Math.floor(Math.random() * remainingLetters.length)];
+                guesses += randomChar;
+                statusMsg.textContent = "Clue: Character '" + randomChar.toUpperCase() + "' revealed!";
+                updateDisplay();
+            }
+
+            clueBtn.classList.add('hidden');
+            gameInput.focus();
+        });
+    }
+
     if (restartBtn) {
         restartBtn.addEventListener('click', initGame);
-    }
-
-    // Dashboard Logic
-    const dashModal = document.getElementById('dashboard-modal');
-    const viewDashBtn = document.getElementById('view-dashboard-btn');
-    let chartsInitialized = false;
-
-    if (viewDashBtn && dashModal) {
-        viewDashBtn.addEventListener('click', () => {
-            dashModal.style.display = 'block';
-            if (!chartsInitialized) {
-                initCharts();
-                chartsInitialized = true;
-            }
-        });
-    }
-
-    function initCharts() {
-        // Common styles for charts
-        const gridColor = 'rgba(255, 255, 255, 0.05)';
-        const textColor = '#a1a1aa';
-
-        // 1. Accuracy Chart (Line)
-        new Chart(document.getElementById('accuracyChart'), {
-            type: 'line',
-            data: {
-                labels: ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'],
-                datasets: [{
-                    label: 'Model Accuracy',
-                    data: [0.65, 0.72, 0.85, 0.88, 0.92, 0.96],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
-                }
-            }
-        });
-
-        // 2. Training Loss (Area)
-        new Chart(document.getElementById('lossChart'), {
-            type: 'line',
-            data: {
-                labels: ['Epoch 1', 'Epoch 2', 'Epoch 3', 'Epoch 4', 'Epoch 5'],
-                datasets: [{
-                    label: 'Loss',
-                    data: [0.8, 0.5, 0.3, 0.15, 0.08],
-                    borderColor: '#f43f5e',
-                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
-                }
-            }
-        });
-
-        // 3. Data Distribution (Doughnut)
-        new Chart(document.getElementById('distributionChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Training', 'Validation', 'Testing'],
-                datasets: [{
-                    data: [70, 15, 15],
-                    backgroundColor: ['#7c3aed', '#06b6d4', '#4ade80'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: textColor, padding: 20 }
-                    }
-                }
-            }
-        });
-
-        // 4. Feature Importance (Bar)
-        new Chart(document.getElementById('importanceChart'), {
-            type: 'bar',
-            data: {
-                labels: ['CNN', 'RNN', 'Transformers', 'GANs', 'RL'],
-                datasets: [{
-                    label: 'Efficiency',
-                    data: [85, 65, 95, 75, 80],
-                    backgroundColor: 'rgba(6, 182, 212, 0.6)',
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { ticks: { color: textColor }, grid: { display: false } },
-                    y: { ticks: { color: textColor }, grid: { color: gridColor } }
-                }
-            }
-        });
     }
 
     // Add dashboard to close logic
     const closeButtons = document.querySelectorAll('.close-modal');
     closeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (dashModal) dashModal.style.display = 'none';
+            // Modal close logic remains for other modals if any
         });
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == dashModal) {
-            dashModal.style.display = 'none';
-        }
+        // Modal close logic remains for other modals if any
     });
 });
